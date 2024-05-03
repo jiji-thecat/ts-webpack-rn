@@ -11,7 +11,7 @@ module.exports = {
       directory: './dist',
     },
   },
-  entry: ['./src/index.ts', './src/styles.css'],
+  entry: ['./index.web.ts'],
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
@@ -20,8 +20,21 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.ts$/,
-        use: 'ts-loader',
+        test: /\.(ts|tsx)$/,
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              cacheDirectory: true,
+              // The 'metro-react-native-babel-preset' preset is recommended to match React Native's packager
+              presets: ['module:metro-react-native-babel-preset'],
+              // Re-write paths to import only the modules needed by the app
+              plugins: ['react-native-web'],
+            },
+          },
+          ,
+          { loader: 'ts-loader' },
+        ],
       },
       {
         test: /\.css$/,
@@ -34,7 +47,10 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: ['.ts', '.js'],
+    alias: {
+      'react-native$': 'react-native-web',
+    },
+    extensions: ['.ts', '.js', '.tsx', '.web.ts'],
   },
   plugins: [
     new MiniCssExtractPlugin(),
