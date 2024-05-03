@@ -4,7 +4,7 @@
 
 [github pages sample](https://jiji-thecat.github.io/ts-webpack-rn/)
 
-This project is for easily creating ts + webpack env on your local. Also you can host your app on github pages.
+This project is for easily creating TypeScript + React Native for Web + webpack env on your local. Also you can host your app on github pages.
 
 ## How to Install and Run
 
